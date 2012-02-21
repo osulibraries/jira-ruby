@@ -4,7 +4,7 @@ module JIRA
   class HTTPError < StandardError
     extend Forwardable
 
-    delegate [:message, :code] => :response
+    delegate [:message, :code], :to => :response
     attr_reader :response
 
     def initialize(response)
