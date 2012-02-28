@@ -83,6 +83,10 @@ module JIRA
       JIRA::Resource::VersionFactory.new(self)
     end
 
+    def Remotelink # :nodoc:
+      JIRA::Resource::RemotelinkFactory.new(self)
+    end
+
     # Returns the shared http object
     def http
       if @http.nil?
