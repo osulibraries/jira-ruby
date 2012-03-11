@@ -21,7 +21,7 @@ module JIRA
     # The configuration options for this client instance
     attr_reader :options
 
-    delegate [:key, :secret, :get_request_token], :to => :consumer
+    delegate [:key, :secret, :get_request_token] => :consumer
 
     DEFAULT_OPTIONS = {
       :rest_base_path => "/rest/api/2",
