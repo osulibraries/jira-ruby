@@ -2,6 +2,9 @@ module JIRA
   module Resource
 
     class IssueFactory < JIRA::BaseFactory # :nodoc:
+      def search(jql)
+        target_class.send('search', @client, jql)
+      end
     end
 
     class Issue < JIRA::Base
@@ -31,6 +34,14 @@ module JIRA
 
       def self.all(client)
         response = client.get(client.options[:rest_base_path] + "/search")
+        json = parse_json(response.body)
+        json['issues'].map do |issue|
+          client.Issue.build(issue)
+        end
+      end
+
+      def self.search(client, jql)
+        response = client.get(client.options[:rest_base_path] + "/search?jql=" + CGI.escape(jql))
         json = parse_json(response.body)
         json['issues'].map do |issue|
           client.Issue.build(issue)
