@@ -27,7 +27,9 @@ module JIRA
       :rest_base_path => "/rest/api/2",
       :site => nil,
       :username => nil,
-      :password => nil
+      :password => nil,
+      :search_fields => '',
+      :max_results => 50
     }
 
     def initialize(options={})

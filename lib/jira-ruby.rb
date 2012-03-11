@@ -22,6 +22,7 @@ require 'jira-ruby/resource/status'
 require 'jira-ruby/resource/comment'
 require 'jira-ruby/resource/worklog'
 require 'jira-ruby/resource/issue'
+require 'jira-ruby/resource/search_results'
 
 require 'jira-ruby/client'
 

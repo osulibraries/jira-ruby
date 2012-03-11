@@ -2,8 +2,8 @@ module JIRA
   module Resource
 
     class IssueFactory < JIRA::BaseFactory # :nodoc:
-      def search(jql)
-        target_class.send('search', @client, jql)
+      def search(options = {})
+        target_class.send('search', @client, options)
       end
     end
 
@@ -32,20 +32,12 @@ module JIRA
 
       has_many :worklogs, :nested_under => ['fields','worklog']
 
-      def self.all(client)
-        response = client.get(client.options[:rest_base_path] + "/search")
-        json = parse_json(response.body)
-        json['issues'].map do |issue|
-          client.Issue.build(issue)
-        end
+      def self.all(client, options = {})
+        JIRA::Resource::SearchResults.new(client, options)
       end
 
-      def self.search(client, jql)
-        response = client.get(client.options[:rest_base_path] + "/search?jql=" + CGI.escape(jql))
-        json = parse_json(response.body)
-        json['issues'].map do |issue|
-          client.Issue.build(issue)
-        end
+      def self.search(client, options = {})
+        JIRA::Resource::SearchResults.new(client, options)
       end
 
       def respond_to?(method_name)
