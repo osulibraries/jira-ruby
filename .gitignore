@@ -7,3 +7,5 @@ pkg/*
 *.pem
 .DS_STORE
 doc
+
+.idea/
