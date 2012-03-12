@@ -56,6 +56,10 @@ module JIRA
         end
       end
 
+      def to_param
+        key
+      end
+
     end
 
   end

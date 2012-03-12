@@ -13,6 +13,10 @@ module JIRA
       def released?
         released
       end
+
+      def to_param
+        id
+      end
     end
 
   end
