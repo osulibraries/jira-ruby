@@ -50,6 +50,15 @@ module JIRA
         @issues.empty?
       end
 
+
+      def method_missing(method_name, *args, &block)
+        if @issues.respond_to? method_name
+          @issues.send(method_name, *args, &block)
+        else
+          super(method_name, *args, &block)
+        end
+      end
+
     end
   end
 end
