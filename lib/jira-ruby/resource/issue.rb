@@ -37,6 +37,7 @@ module JIRA
       end
 
       def self.search(client, options = {})
+        options[:jql] = options[:jql].to_s
         JIRA::Resource::SearchResults.new(client, options)
       end
 

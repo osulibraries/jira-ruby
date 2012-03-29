@@ -7,6 +7,7 @@ end
 
 require 'jira-ruby/base'
 require 'jira-ruby/base_factory'
+require 'jira-ruby/jql'
 require 'jira-ruby/has_many_proxy'
 require 'jira-ruby/http_error'
 
