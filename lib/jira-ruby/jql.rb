@@ -53,11 +53,6 @@ module JIRA
       return self
     end
 
-    def order_by(order_by)
-      self.order_by(order_by)
-      return self
-    end
-
     def to_s
       jql = ""
       jql << @clause
