@@ -77,6 +77,10 @@ module JIRA
       JIRA::Resource::AttachmentFactory.new(self)
     end
 
+    def Transition # :nodoc:
+      JIRA::Resource::TransitionFactory.new(self)
+    end
+
     def Worklog # :nodoc:
       JIRA::Resource::WorklogFactory.new(self)
     end

@@ -27,6 +27,7 @@ module JIRA
 
       has_many :attachments, :nested_under => 'fields',
                           :attribute_key => 'attachment'
+      has_many :transitions, :attribute_key => 'transitions'
 
       has_many :versions, :nested_under => 'fields'
 

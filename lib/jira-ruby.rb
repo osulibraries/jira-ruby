@@ -13,6 +13,7 @@ require 'jira-ruby/http_error'
 
 require 'jira-ruby/resource/user'
 require 'jira-ruby/resource/attachment'
+require 'jira-ruby/resource/transition'
 require 'jira-ruby/resource/component'
 require 'jira-ruby/resource/issuetype'
 require 'jira-ruby/resource/version'
