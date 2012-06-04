@@ -23,10 +23,10 @@ module JIRA
 
       has_many :components, :nested_under => 'fields'
 
-      has_many :comments, :nested_under => ['fields','comment']
+      has_many :comments, :nested_under => ['renderedFields','comment']
 
       # Attachment class for reading existing attachments, issue relation not required, since they have their own endpoint
-      has_many :attachments, :nested_under => 'fields',
+      has_many :attachments, :nested_under => 'renderedFields',
                             :attribute_key => 'attachment'
 
       # Attachment class for adding new attachments, which are attached to Issue class
@@ -36,7 +36,7 @@ module JIRA
 
       has_many :versions, :nested_under => 'fields'
 
-      has_many :worklogs, :nested_under => ['fields','worklog']
+      has_many :worklogs, :nested_under => ['renderedFields','worklog']
 
       def self.all(client, options = {})
         JIRA::Resource::SearchResults.new(client, options)
@@ -67,6 +67,9 @@ module JIRA
         key
       end
 
+      def url
+        super + '?expand=renderedFields'
+      end
     end
 
   end
