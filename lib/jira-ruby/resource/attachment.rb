@@ -7,6 +7,5 @@ module JIRA
     class Attachment < JIRA::Base
       has_one :author, :class => JIRA::Resource::User
     end
-
   end
 end

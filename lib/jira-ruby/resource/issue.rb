@@ -25,11 +25,14 @@ module JIRA
 
       has_many :comments, :nested_under => ['fields','comment']
 
+      # Attachment class for reading existing attachments, issue relation not required, since they have their own endpoint
       has_many :attachments, :nested_under => 'fields',
-                          :attribute_key => 'attachment'
-      has_many :transitions, :attribute_key => 'transitions'
+                            :attribute_key => 'attachment'
 
-      has_many :attach, :attribute_key => 'attachments'
+      # Attachment class for adding new attachments, which are attached to Issue class
+      has_many :attachment, :class => JIRA::Resource::IssueAttachment
+
+      has_many :transitions, :attribute_key => 'transitions'
 
       has_many :versions, :nested_under => 'fields'
 

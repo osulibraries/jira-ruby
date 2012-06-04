@@ -1,6 +1,7 @@
 require 'json'
 require 'forwardable'
 require 'net/https'
+require 'net/http/post/multipart'
 
 module JIRA
 
@@ -77,8 +78,8 @@ module JIRA
       JIRA::Resource::AttachmentFactory.new(self)
     end
 
-    def Attach
-      JIRA::Resource::AttachFactory.new(self)
+    def IssueAttachment # :nodoc:
+      JIRA::Resource::IssueAttachmentFactory.new(self)
     end
 
     def Transition # :nodoc:
@@ -126,6 +127,12 @@ module JIRA
       headers = {'Content-Type' => 'application/json'}.merge(headers)
       request = Net::HTTP::Post.new(path, merge_default_headers(headers))
       request.body = body
+      execute_request(request)
+    end
+
+    def upload(path, upload, headers = {})
+      file = UploadIO.new(upload.tempfile, upload.content_type, upload.original_filename )
+      request = Net::HTTP::Post::Multipart.new(path, {"file" => file}, headers)
       execute_request(request)
     end
 
