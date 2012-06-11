@@ -20,6 +20,9 @@ module JIRA
         response = @client.get(@client.options[:rest_base_path] + "/search?jql=" + CGI.escape(jql) + "&startAt=#{start_at}" + "&maxResults=#{max_results}" + "&fields=#{fields}" + "&expand=#{expand}")
 
         @query_results = Issue.parse_json(response.body)
+
+        return nil if @query_results['issues'].nil?
+
         @issues = @query_results['issues'].map do |issue|
           client.Issue.build(issue)
         end
