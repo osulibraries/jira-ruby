@@ -12,6 +12,7 @@ require 'jira-ruby/has_many_proxy'
 require 'jira-ruby/http_error'
 
 require 'jira-ruby/resource/user'
+require 'jira-ruby/resource/issue_link'
 require 'jira-ruby/resource/attachment'
 require 'jira-ruby/resource/issue_attachment'
 require 'jira-ruby/resource/transition'

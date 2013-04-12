@@ -50,6 +50,10 @@ module JIRA
       JIRA::Resource::IssueFactory.new(self)
     end
 
+    def IssueLink# :nodoc:
+      JIRA::Resource::IssueLinkFactory.new(self)
+    end
+
     def Component # :nodoc:
       JIRA::Resource::ComponentFactory.new(self)
     end
@@ -103,7 +107,7 @@ module JIRA
       if @http.nil?
         @http = Net::HTTP.new(@uri.host, @uri.port)
         @http.use_ssl = (@uri.port == 443)
-        @http.verify_mode = OpenSSL::SSL::VERIFY_NONE      
+        @http.verify_mode = OpenSSL::SSL::VERIFY_NONE
       end
 
       @http
