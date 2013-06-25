@@ -284,7 +284,7 @@ module JIRA
     # and returns true when found, otherwise proxies the
     # call to the superclass.
     def respond_to?(method_name)
-      if attrs.keys.include? method_name.to_s
+      if attrs.is_a?(Hash) and attrs.keys.include? method_name.to_s
         true
       else
         super(method_name)
