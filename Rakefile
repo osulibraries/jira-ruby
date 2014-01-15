@@ -1,14 +1,24 @@
-require "bundler/gem_tasks"
+require 'bundler/gem_tasks'
 
 require 'rubygems'
 require 'rspec/core/rake_task'
-require 'rake/rdoctask'
+require 'rdoc/task'
 
 Dir.glob('lib/tasks/*.rake').each { |r| import r }
 
-task :default => [:spec]
+task :default => [:test]
 
-desc "Run RSpec tests"
+task :test => [:prepare, :spec]
+
+desc 'Prepare and run rspec tests'
+task :prepare do
+  rsa_key = File.expand_path('rsakey.pem')
+  if !File.exists?(rsa_key)
+    raise 'rsakey.pem does not exist, tests will fail.  Run `rake jira:generate_public_cert` first'
+  end
+end
+
+desc 'Run RSpec tests'
 RSpec::Core::RakeTask.new(:spec)
 
 Rake::RDocTask.new(:doc) do |rd|

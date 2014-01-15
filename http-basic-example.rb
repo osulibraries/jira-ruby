@@ -1,38 +1,32 @@
 require 'rubygems'
 require 'pp'
-require './lib/jira'
-
-CONSUMER_KEY = 'test'
-SITE         = 'https://test.jira.com'
-
-options = {
-  :private_key_file => "rsakey.pem",
-  :context_path     => '',
-  :consumer_key     => CONSUMER_KEY,
-  :site             => SITE
-}
-
-client = JIRA::Client.new(options)
+require 'jira'
 
 if ARGV.length == 0
-  # If not passed any command line arguments, open a browser and prompt the
-  # user for the OAuth verifier.
-  request_token = client.request_token
-  puts "Opening #{request_token.authorize_url}"
-  system "open #{request_token.authorize_url}"
+  # If not passed any command line arguments, prompt the
+  # user for the username and password.
+  puts "Enter the username: "
+  username = gets.strip
 
-  puts "Enter the oauth_verifier: "
-  oauth_verifier = gets.strip
-
-  access_token = client.init_access_token(:oauth_verifier => oauth_verifier)
-  puts "Access token: #{access_token.token} secret: #{access_token.secret}"
+  puts "Enter the password: "
+  password = gets.strip
 elsif ARGV.length == 2
-  # Otherwise assume the arguments are a previous access token and secret.
-  access_token = client.set_access_token(ARGV[0], ARGV[1])
+  username, password = ARGV[0], ARGV[1]
 else
   # Script must be passed 0 or 2 arguments
-  raise "Usage: #{$0} [ token secret ]"
+  raise "Usage: #{$0} [ username password ]"
 end
+
+options = {
+            :username => username,
+            :password => password,
+            :site     => 'http://localhost:8080/',
+            :context_path => '',
+            :auth_type => :basic,
+            :use_ssl => false
+          }
+
+client = JIRA::Client.new(options)
 
 # Show all projects
 projects = client.Project.all
@@ -40,8 +34,6 @@ projects = client.Project.all
 projects.each do |project|
   puts "Project -> key: #{project.key}, name: #{project.name}"
 end
-issue = client.Issue.find('SAMPLEPROJECT-1')
-pp issue
 
 # # Find a specific project by key
 # # ------------------------------

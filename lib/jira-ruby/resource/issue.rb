@@ -1,3 +1,5 @@
+require 'cgi'
+
 module JIRA
   module Resource
 
@@ -45,6 +47,15 @@ module JIRA
       def self.search(client, options = {})
         options[:jql] = options[:jql].to_s
         JIRA::Resource::SearchResults.new(client, options)
+      end
+
+      def self.jql(client, jql)
+        url = client.options[:rest_base_path] + "/search?jql=" + CGI.escape(jql)
+        response = client.get(url)
+        json = parse_json(response.body)
+        json['issues'].map do |issue|
+          client.Issue.build(issue)
+        end
       end
 
       def respond_to?(method_name)
